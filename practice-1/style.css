@@ -212,6 +212,23 @@ body:has(.modal--show)::before {
   z-index: 0;
 }
 
+.form-field__file-reset {
+  box-sizing: border-box;
+  position: absolute;
+  top: 10px;
+  right: 2px;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  background: #FFF;
+  cursor: pointer;
+  z-index: 1;
+}
+
 .form__row {
   display: flex;
   gap: clamp(1rem, 3vw, 32px);

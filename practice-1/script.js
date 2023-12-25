@@ -86,12 +86,23 @@ const previewInputFileImage = (inputFile, placePreview) => {
         placePreview.style.backgroundImage = `url(${event.target.result})`;
       }
       fileReader.readAsDataURL(file[0]);
+  } else {
+    placePreview.style.backgroundImage = ``;
   }
 }
-document.querySelector(".form-field__file").addEventListener("change", (e) => {
-  const placePreview = document.querySelector(".form-field__file-preview");
+
+const inputFileImage = document.querySelector(".form-field__file");
+const placePreview = document.querySelector(".form-field__file-preview");
+const btnReset = document.querySelector(".form-field__file-reset");
+
+inputFileImage.addEventListener("change", (e) => {
   previewInputFileImage(e.target, placePreview);
 });
+btnReset.addEventListener('click', (e) => {
+  e.preventDefault();
+  inputFileImage.value = null;
+  previewInputFileImage(e.target, placePreview);
+})
 
 
 const validateForm = (form) => {
