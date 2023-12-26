@@ -18,11 +18,13 @@ const modal = () => {
     offsetTop = window.scrollY;
     const modal = document.querySelector(id);
     modal.classList.add('modal--show');
+    document.body.classList.add('modal-backing');
   }
 
   const closeModal = (id) => {
     const modal = document.querySelector(id);
     modal.classList.remove('modal--show');
+    document.body.classList.remove('modal-backing');
     window.scrollTo(0, offsetTop);
   }
 

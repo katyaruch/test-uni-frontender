@@ -12,11 +12,11 @@ body {
 }
 
 
-body:has(.modal--show) {
+body.modal-backing {
   overflow: auto;
 }
 
-body:has(.modal--show)::before {
+body.modal-backing::before {
   content: "";
   position: fixed;
   top: 0;
@@ -54,20 +54,39 @@ body:has(.modal--show)::before {
 
 .modal__inner {
   margin: 0 10px;
-  padding: clamp(3rem, 5vw, 53px) clamp(1rem, 9vw, 98px);
+  padding: 53px 98px;
 
   background: #fff;
   border-radius: 12px;
 }
 
 .modal__title {
-  margin: 0 0 clamp(1.5rem, 3.5vw, 35px);
+  margin: 0 0 35px;
   color: #0C1014;
 
   font-family: Montserrat;
-  font-size: clamp(24px, 2.8vw, 28px);
+  font-size: 28px;
   font-weight: 800;
   line-height: 1.2; 
+}
+@media (max-width: 460px) {
+  .modal__inner {
+    padding: 3rem 1rem;
+  }
+  .modal__title {
+    margin: 0 0 1.5rem;
+    font-size: 24px;
+  }
+}
+
+@supports (font-size: clamp(24px, 2.8vw, 28px)) {
+  .modal__inner {
+    padding: clamp(3rem, 5vw, 53px) clamp(1rem, 9vw, 98px);
+  }
+  .modal__title {
+    margin: 0 0 clamp(1.5rem, 3.5vw, 35px);
+    font-size: clamp(24px, 2.8vw, 28px);
+  }
 }
 
 /* form */
@@ -76,9 +95,7 @@ body:has(.modal--show)::before {
 }
 
 .form-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
   gap: 15px;
 }
 
@@ -88,7 +105,7 @@ body:has(.modal--show)::before {
 }
 
 .form-field:not(:last-child) {
-  margin-bottom: clamp(1rem, 3vw, 32px);
+  margin-bottom: 32px;
 }
 
 .form-field__label {
@@ -115,22 +132,22 @@ body:has(.modal--show)::before {
   outline-color: #E5266E;
 }
 
-.form-field:has(.form-field__label) .form-field__input {
+.form-field--with-label .form-field__input {
   padding: 22px 16px 8px;
 }
 
-.form-field:has(.form-field__label) .form-field__input::placeholder {
+.form-field--with-label .form-field__input::placeholder {
   opacity: 0;
 }
 
-.form-field:has(.form-field__input:placeholder-shown) .form-field__label {
+.form-field__input:placeholder-shown + .form-field__label {
   top: 18px;
 }
-.form-field:has(.form-field__input:placeholder-shown:focus) .form-field__label {
+.form-field__input:focus + .form-field__label {
   top: 8px;
 }
-.form-field:has(.form-field__input[required]) .form-field__label::before,
-.form-field:has(.form-field__file[required]) .form-field__label::before {
+.form-field__input[required] + .form-field__label::before,
+.form-field__file[required] + .form-field__label::before {
   content: "✱";
   
   margin-right: 3px;
@@ -138,7 +155,7 @@ body:has(.modal--show)::before {
   color: #D90000;
 }
 
-.form-field:has(.form-field__icon) .form-field__input {
+.form-field--with-icon .form-field__input {
   padding-right: 45px;
 }
 
@@ -150,14 +167,14 @@ body:has(.modal--show)::before {
   pointer-events: none;
 }
 
-.form-field:has(.form-field__file) {
+.form-field--image {
   width: 175px;
   height: 175px;
   margin-top: 30px;
   flex-shrink: 0;
 }
 
-.form-field:has(.form-field__file) .form-field__label {
+.form-field--image .form-field__label {
   top: -30px;
   left: 0;
   right: 0;
@@ -183,7 +200,6 @@ body:has(.modal--show)::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 7px;
 
   width: 100%;
   height: 100%;
@@ -196,6 +212,10 @@ body:has(.modal--show)::before {
   background: rgba(0,0,0,0.6);
   cursor: pointer;
   z-index: 1;
+}
+
+.form-field__file-label svg {
+  margin-bottom: 7px;
 }
 
 .form-field__file-preview {
@@ -231,19 +251,48 @@ body:has(.modal--show)::before {
 
 .form__row {
   display: flex;
-  gap: clamp(1rem, 3vw, 32px);
   width: 100%;
-  margin-bottom: clamp(1rem, 3vw, 32px);
+  margin-bottom: 32px;
 }
 
 .form__col {
   width: 100%;
+  margin: 0 32px 0 0;
 }
 
+
+
 @media (max-width: 460px) {
+  .form-field:not(:last-child) {
+    margin-bottom: 1rem;
+  }
   .form__row {
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .form__col {
+    margin: 0 0 32px 0;
+  }
+}
+
+@supports (margin-bottom: clamp(1rem, 3vw, 32px)) {
+  .form-field:not(:last-child) {
+    margin-bottom: clamp(1rem, 3vw, 32px);
+  }
+  
+  .form__row {
+    margin-bottom: clamp(1rem, 3vw, 32px);
+  }
+  
+  .form__col {
+    margin: 0 clamp(1rem, 3vw, 32px) 0 0;
+  }
+    
+  @media (max-width: 460px) {
+    .form__col {
+      margin: 0 0 clamp(1rem, 3vw, 32px) 0;
+    }
   }
 }
 
